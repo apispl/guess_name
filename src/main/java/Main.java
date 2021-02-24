@@ -2,7 +2,6 @@ import dataloader.FileFacade;
 import dataloader.FileFacadeImpl;
 import dataloader.FileFetcher;
 import dataloader.FileLineValidator;
-import dataloader.NameDetector;
 import dataloader.NameFileFether;
 import dataloader.NameLineValidator;
 
@@ -21,8 +20,11 @@ public class Main {
         Set<String> femaleNames = fileFacade.extract(Path.of("src/main/resources/female_names"));
         maleNames.forEach(System.out::println);
         femaleNames.forEach(System.out::println);
+        System.out.println("------------------");
 
-        NameDetector nameDetector = new FirstNameDetector(maleNames, femaleNames);
-        System.out.println(nameDetector.detect("Zbigniew"));
+        NameDetector firstNameDetector = new FirstNameDetector(maleNames, femaleNames);
+        System.out.println(firstNameDetector.detect("Agata"));
+        NameDetector fullNameDetector = new FullNameDetector(maleNames, femaleNames);
+        System.out.println(fullNameDetector.detect("Jan Maria Rokita"));
     }
 }
