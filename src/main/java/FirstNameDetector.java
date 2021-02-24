@@ -1,5 +1,3 @@
-import dataloader.NameDetector;
-
 import java.util.Set;
 
 public class FirstNameDetector extends NameDetector {
