@@ -1,14 +1,19 @@
-import java.util.Set;
+import dataloader.FileFacade;
+
+import java.io.IOException;
+import java.nio.file.Path;
 
 public abstract class NameDetector {
 
-    public final Set<String> maleSet;
-    public final Set<String> femaleSet;
+    public final FileFacade fileFacade;
+    public final Path malePath;
+    public final Path femalePath;
 
-    public NameDetector(Set<String> maleSet, Set<String> femaleSet) {
-        this.maleSet = maleSet;
-        this.femaleSet = femaleSet;
+    public NameDetector(FileFacade fileFacade, Path malePath, Path femalePath) {
+        this.fileFacade = fileFacade;
+        this.malePath = malePath;
+        this.femalePath = femalePath;
     }
 
-    public abstract String detect(String name);
+    public abstract String detect(String nameSurname) throws IOException;
 }
