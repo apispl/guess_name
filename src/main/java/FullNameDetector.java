@@ -1,19 +1,25 @@
-import java.util.Set;
+import dataloader.FileFacade;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.NoSuchElementException;
 
 public class FullNameDetector extends NameDetector {
 
-    public FullNameDetector(Set<String> maleSet, Set<String> femaleSet) {
-        super(maleSet, femaleSet);
+    public FullNameDetector(FileFacade fileFacade, Path malePath, Path femalePath) {
+        super(fileFacade, malePath, femalePath);
     }
 
     @Override
-    public String detect(String nameSurname) {
-        String[] separatedNames = nameSurname.split(" ");
-
+    public String detect(String nameSurname) throws IOException {
+        String[] splited = nameSurname.split(" ");
         int maleCounter = 0;
         int femaleCounter = 0;
 
-        for (String separatedName : separatedNames) {
+        if (nameSurname.length() < 1)
+            throw new NoSuchElementException("Add name");
+
+        for (String separatedName : splited) {
             if (isMale(separatedName))
                 maleCounter++;
             if (isFemale(separatedName))
@@ -28,11 +34,11 @@ public class FullNameDetector extends NameDetector {
             return "INCONCLUSIVE";
     }
 
-    private boolean isMale(String name){
-        return super.maleSet.contains(name);
+    private boolean isMale(String name) throws IOException {
+        return super.fileFacade.hasName(malePath, name);
     }
 
-    private boolean isFemale(String name){
-        return super.femaleSet.contains(name);
+    private boolean isFemale(String name) throws IOException {
+        return super.fileFacade.hasName(femalePath, name);
     }
 }

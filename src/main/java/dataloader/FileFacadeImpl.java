@@ -2,9 +2,6 @@ package dataloader;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FileFacadeImpl implements FileFacade {
 
@@ -17,9 +14,9 @@ public class FileFacadeImpl implements FileFacade {
     }
 
     @Override
-    public Set<String> extract(Path path) throws IOException {
+    public boolean hasName(Path path, String name) throws IOException {
         return fileFetcher.fetch(path)
                 .filter(fileLineValidator::validate)
-                .collect(Collectors.toSet());
+                .anyMatch(line -> line.equals(name));
     }
 }

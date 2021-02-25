@@ -7,24 +7,22 @@ import dataloader.NameLineValidator;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Set;
 
 public class Main {
+
+    private static final Path MALE_PATH = Path.of("src/main/resources/male_names");
+    private static final Path FEMALE_PATH = Path.of("src/main/resources/female_names");
 
     public static void main(String[] args) throws IOException {
         FileLineValidator fileLineValidator = new NameLineValidator();
         FileFetcher fileFetcher = new NameFileFether();
         FileFacade fileFacade = new FileFacadeImpl(fileLineValidator, fileFetcher);
 
-        Set<String> maleNames = fileFacade.extract(Path.of("src/main/resources/male_names"));
-        Set<String> femaleNames = fileFacade.extract(Path.of("src/main/resources/female_names"));
-        maleNames.forEach(System.out::println);
-        femaleNames.forEach(System.out::println);
-        System.out.println("------------------");
+        NameDetector firstNameDetector = new FirstNameDetector(fileFacade, MALE_PATH, FEMALE_PATH);
+        NameDetector fullNameDetector = new FullNameDetector(fileFacade, MALE_PATH, FEMALE_PATH);
 
-        NameDetector firstNameDetector = new FirstNameDetector(maleNames, femaleNames);
-        System.out.println(firstNameDetector.detect("Agata"));
-        NameDetector fullNameDetector = new FullNameDetector(maleNames, femaleNames);
-        System.out.println(fullNameDetector.detect("Jan Maria Rokita"));
+        System.out.println(firstNameDetector.detect("Karol"));
+        System.out.println(fullNameDetector.detect("Jan Jan Anna Anna Anna"));
+
     }
 }
