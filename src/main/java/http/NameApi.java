@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class NameApi {
 
     public static HttpServer create(int serverPort) throws IOException {
-        return HttpServer.create(new InetSocketAddress(serverPort), 0);
+        return HttpServer.create(new InetSocketAddress("localhost", serverPort), 0);
     }
 
     public static void configure(HttpServer server, String pathEndpoint, DetectorServiceImpl detectorService) throws IOException {
