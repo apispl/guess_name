@@ -14,7 +14,7 @@ public class FullNameDetector implements NameDetector {
         int maleCounter = 0;
         int femaleCounter = 0;
 
-        if (nameSurname.length() < 1)
+        if (nameSurname.length() < 1 || splited.length < 1)
             throw new NoSuchElementException("Add name");
 
         for (String separatedName : splited) {

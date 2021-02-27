@@ -1,5 +1,6 @@
 package http;
 
+import buissineslogic.DetectorServiceImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -16,7 +17,7 @@ public class NameApi {
         return HttpServer.create(new InetSocketAddress(serverPort), 0);
     }
 
-    public static void configure(HttpServer server, String pathEndpoint, DetectorService detectorService) throws IOException {
+    public static void configure(HttpServer server, String pathEndpoint, DetectorServiceImpl detectorService) throws IOException {
         server.createContext(pathEndpoint, (exchange -> {
             String requestMethod = exchange.getRequestMethod();
 
@@ -31,7 +32,7 @@ public class NameApi {
         server.setExecutor(null);
     }
 
-    private static void getHttpMethod(HttpExchange exchange, DetectorService detectorService) throws IOException {
+    private static void getHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
         byte[] maleTokens = detectorService.getMaleTokens();
         byte[] femaleTokens = detectorService.getFemaleTokens();
         byte[] allTokens = concatByteArray(maleTokens, femaleTokens);
@@ -39,7 +40,7 @@ public class NameApi {
         sendResponse(exchange, allTokens);
     }
 
-    private static void postHttpMethod(HttpExchange exchange, DetectorService detectorService) throws IOException {
+    private static void postHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
         String input = readInput(exchange);
         byte[] nameDetected = detectorService.detectName(input).getBytes();
 

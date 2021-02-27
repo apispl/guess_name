@@ -1,4 +1,4 @@
-package http;
+package buissineslogic;
 
 import dataloader.FileFacade;
 import detectAlgorithms.NameDetector;
@@ -6,14 +6,14 @@ import detectAlgorithms.NameDetector;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class DetectorService {
+public class DetectorServiceImpl implements DetectorService {
 
     private final FileFacade fileFacade;
     private final NameDetector nameDetector;
     private final Path malePath;
     private final Path femalePath;
 
-    public DetectorService(FileFacade fileFacade, NameDetector nameDetector, Path malePath, Path femalePath) {
+    public DetectorServiceImpl(FileFacade fileFacade, NameDetector nameDetector, Path malePath, Path femalePath) {
         this.fileFacade = fileFacade;
         this.nameDetector = nameDetector;
         this.malePath = malePath;
