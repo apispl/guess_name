@@ -16,21 +16,21 @@ Application should expose two HTTP endpoints: one for using the gender guessing 
 
 ## Technical requirements:
 
-Use Java and JDK >= 11
-Use Gradle (preferable) or Maven to provide a task that builds JAR that is runnable on its own.
-Apart from the above, any frameworks and libraries are permitted.
-Code should be well tested
-Code should be provided in a form of a link to a git repository.
-Don’t load token lists into memory, as it could be very huge.
-[Optional] Make algorithm (not to be confused with the whole app) versionable.
-[Optional] Make it easily runnable through docker.
+* Use Java and JDK >= 11
+* Use Gradle (preferable) or Maven to provide a task that builds JAR that is runnable on its own.
+* Apart from the above, any frameworks and libraries are permitted.
+* Code should be well tested
+* Code should be provided in a form of a link to a git repository.
+* Don’t load token lists into memory, as it could be very huge.
+* [Optional] Make algorithm (not to be confused with the whole app) versionable.
+* [Optional] Make it easily runnable through docker.
 
 ## Additional notes
 
 For the needs of this assignment, consider only two genders: female and male.
 As we will be reviewing your submission thoroughly, we’re not only interested in the proposed solution, but also in your craftsmanship and that includes:
-ability to write clean code - your code should be easy to follow and understand, self-documenting (we value readability over conciseness), consistent and, well tested 
-knowledge and practical ability to leverage principles like SOLID, DRY, KISS
-ability to maintain a project - file structure, overall content, dependency management
-ability to leverage git and version control - your journey matters as much as your goal - we’ll review commit history and how your solution might have evolved over time
-We hope that you’ll find this task interesting and challenging. Good luck!
+* ability to write clean code - your code should be easy to follow and understand, self-documenting (we value readability over conciseness), consistent and, well tested 
+* knowledge and practical ability to leverage principles like SOLID, DRY, KISS
+* ability to maintain a project - file structure, overall content, dependency management
+* ability to leverage git and version control - your journey matters as much as your goal - we’ll review commit history and how your solution might have evolved over time
+* We hope that you’ll find this task interesting and challenging. Good luck!
