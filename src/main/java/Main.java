@@ -4,7 +4,7 @@ import dataloader.FileFacadeConfiguration;
 import detectAlgorithms.FirstNameDetector;
 import detectAlgorithms.FullNameDetector;
 import detectAlgorithms.NameDetector;
-import http.DetectorService;
+import buissineslogic.DetectorServiceImpl;
 import http.NameApi;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class Main {
         NameDetector firstNameDetector = new FirstNameDetector();
         NameDetector fullNameDetector = new FullNameDetector();
 
-        DetectorService detectorService = new DetectorService(fileFacade, fullNameDetector, MALE_PATH, FEMALE_PATH);
+        DetectorServiceImpl detectorService = new DetectorServiceImpl(fileFacade, fullNameDetector, MALE_PATH, FEMALE_PATH);
 
         HttpServer nameApi = NameApi.create(8080);
         NameApi.configure(nameApi, "/detector", detectorService);
