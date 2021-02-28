@@ -1,4 +1,4 @@
-package detectAlgorithms;
+package detect_algorithms;
 
 import dataloader.FileFacade;
 
