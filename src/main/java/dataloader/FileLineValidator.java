@@ -1,5 +1,5 @@
 package dataloader;
 
-public interface FileLineValidator {
+interface FileLineValidator {
     boolean validate(String line);
 }

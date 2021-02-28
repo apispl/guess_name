@@ -1,12 +1,11 @@
 package main;
 
-import com.sun.net.httpserver.HttpServer;
+import buissines_logic.DetectorServiceImpl;
 import dataloader.FileFacade;
 import dataloader.FileFacadeConfiguration;
-import detectAlgorithms.FirstNameDetector;
-import detectAlgorithms.FullNameDetector;
-import detectAlgorithms.NameDetector;
-import buissineslogic.DetectorServiceImpl;
+import detect_algorithms.FirstNameDetector;
+import detect_algorithms.FullNameDetector;
+import detect_algorithms.NameDetector;
 import http.NameApi;
 
 import java.io.IOException;
@@ -25,8 +24,8 @@ public class Main {
 
         DetectorServiceImpl detectorService = new DetectorServiceImpl(fileFacade, nameDetectorAlgorithm, MALE_PATH, FEMALE_PATH);
 
-        HttpServer nameApi = NameApi.create(8000);
-        NameApi.configure(nameApi, "/detector", detectorService);
+        NameApi nameApi = new NameApi(8080);
+        nameApi.configure("/detector", detectorService);
         nameApi.start();
     }
 
@@ -40,13 +39,11 @@ public class Main {
                 "type 1 or 2: ");
 
         int choose = scanner.nextInt();
-        switch(choose) {
-            case 1:
-                nameDetectorAlgorithm = new FirstNameDetector();
-                break;
-            default:
-                nameDetectorAlgorithm = new FullNameDetector();
-        }
+
+        if (choose == 1)
+            nameDetectorAlgorithm = new FirstNameDetector();
+        else
+            nameDetectorAlgorithm = new FullNameDetector();
 
         System.out.println("You choose " + choose + " algorithm.");
         return nameDetectorAlgorithm;

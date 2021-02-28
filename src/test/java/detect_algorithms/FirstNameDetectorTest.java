@@ -1,4 +1,4 @@
-package detectAlgorithms;
+package detect_algorithms;
 
 import dataloader.FileFacade;
 import dataloader.FileFacadeConfiguration;
@@ -9,23 +9,24 @@ import java.util.NoSuchElementException;
 
 import static ownassertions.Assertions.assertEquals;
 
-public class FullNameDetectorTest {
+class FirstNameDetectorTest {
+
     private static final Path MALE_TEST_PATH = Path.of("src/test/resources/male_names_test");
     private static final Path FEMALE_TEST_PATH = Path.of("src/test/resources/female_names_test");
 
     public static void main(String[] args) throws IOException {
-        shouldDetectFullNameDetector_male();
-        shouldDetectFullNameDetector_female();
-        shouldDetectFullNameDetector_inconclusive();
-        shouldNotDetectFullNameDetector_emptyInput();
-        shouldNotDetectFullNameDetector_spaceInput();
+        shouldDetectFirstNameDetector_male();
+        shouldDetectFirstNameDetector_female();
+        shouldDetectFirstNameDetector_inconclusive();
+        shouldNotDetectFirstNameDetector_emptyInput();
+        shouldNotDetectFirstNameDetector_spaceInput();
     }
 
-    static void shouldDetectFullNameDetector_male() throws IOException {
+    static void shouldDetectFirstNameDetector_male() throws IOException {
         //given
         NameDetector nameDetector = new FullNameDetector();
         FileFacade fileFacade = FileFacadeConfiguration.configure();
-        String inputName = "Karol Pompejusz Janusz Maria Jan";
+        String inputName = "Karol Pompejusz";
 
         //when
         String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
@@ -34,11 +35,11 @@ public class FullNameDetectorTest {
         assertEquals("MALE", result);
     }
 
-    static void shouldDetectFullNameDetector_female() throws IOException {
+    static void shouldDetectFirstNameDetector_female() throws IOException {
         //given
         NameDetector nameDetector = new FullNameDetector();
         FileFacade fileFacade = FileFacadeConfiguration.configure();
-        String inputName = "Karol Anna Jadwiga Anna";
+        String inputName = "Anna Jadwiga";
 
         //when
         String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
@@ -47,11 +48,11 @@ public class FullNameDetectorTest {
         assertEquals("FEMALE", result);
     }
 
-    static void shouldDetectFullNameDetector_inconclusive() throws IOException {
+    static void shouldDetectFirstNameDetector_inconclusive() throws IOException {
         //given
         NameDetector nameDetector = new FullNameDetector();
         FileFacade fileFacade = FileFacadeConfiguration.configure();
-        String inputName = "Anna Karol";
+        String inputName = "Jadwiga";
 
         //when
         String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
@@ -60,7 +61,7 @@ public class FullNameDetectorTest {
         assertEquals("INCONCLUSIVE", result);
     }
 
-    static void shouldNotDetectFullNameDetector_emptyInput() throws IOException {
+    static void shouldNotDetectFirstNameDetector_emptyInput() throws IOException {
         //given
         NameDetector nameDetector = new FullNameDetector();
         FileFacade fileFacade = FileFacadeConfiguration.configure();
@@ -78,7 +79,7 @@ public class FullNameDetectorTest {
         assertEquals("Add name", errorMessage);
     }
 
-    static void shouldNotDetectFullNameDetector_spaceInput() throws IOException {
+    static void shouldNotDetectFirstNameDetector_spaceInput() throws IOException {
         //given
         NameDetector nameDetector = new FullNameDetector();
         FileFacade fileFacade = FileFacadeConfiguration.configure();

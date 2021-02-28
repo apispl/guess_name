@@ -2,8 +2,9 @@ package dataloader;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
-public class FileFacadeImpl implements FileFacade {
+class FileFacadeImpl implements FileFacade {
 
     private final FileLineValidator fileLineValidator;
     private final FileFetcher fileFetcher;
@@ -21,13 +22,10 @@ public class FileFacadeImpl implements FileFacade {
     }
     
     @Override
-    public byte[] fetch(Path path) throws IOException {
-        StringBuilder builder = new StringBuilder();
-
-        fileFetcher.fetch(path)
+    public byte[] fetchData(Path path) throws IOException {
+        return fileFetcher.fetch(path)
                 .filter(fileLineValidator::validate)
-                .forEach(string -> builder.append(string).append("\n"));
-
-        return builder.toString().getBytes();
+                .map(str -> str.concat("\n"))
+                .collect(Collectors.joining()).getBytes();
     }
 }
