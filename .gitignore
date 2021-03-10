@@ -35,6 +35,9 @@ hs_err_pid*
 
 
 .idea/*
+.mvn/*
+mvnw
+mvnw.cmd
 !.idea/codeStyles/*
 !.idea/codeStyles/
 target/*
