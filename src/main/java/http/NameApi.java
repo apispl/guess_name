@@ -1,6 +1,6 @@
 package http;
 
-import buissineslogic.DetectorServiceImpl;
+import buissines_logic.DetectorServiceImpl;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -8,17 +8,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.util.Scanner;
 
 public class NameApi {
 
-    public static HttpServer create(int serverPort) throws IOException {
-        return HttpServer.create(new InetSocketAddress("localhost", serverPort), 0);
+    private final HttpServer httpServer;
+
+    public NameApi(int serverPort) throws IOException {
+        this.httpServer = HttpServer.create(new InetSocketAddress(serverPort), 0);
     }
 
-    public static void configure(HttpServer server, String pathEndpoint, DetectorServiceImpl detectorService) throws IOException {
-        server.createContext(pathEndpoint, (exchange -> {
+    public void configure(String pathEndpoint, DetectorServiceImpl detectorService) {
+        this.httpServer.createContext(pathEndpoint, (exchange -> {
             String requestMethod = exchange.getRequestMethod();
 
             if ("GET".equals(requestMethod))
@@ -29,39 +30,34 @@ public class NameApi {
                 exchange.sendResponseHeaders(405, -1); //Method not allowed at this endpoint
             exchange.close();
         }));
-        server.setExecutor(null);
+        this.httpServer.setExecutor(null);
     }
 
-    private static void getHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
-        byte[] maleTokens = detectorService.getMaleTokens();
-        byte[] femaleTokens = detectorService.getFemaleTokens();
-        byte[] allTokens = concatByteArray(maleTokens, femaleTokens);
+    public void start() {
+        this.httpServer.start();
+    }
+
+    private void getHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
+        byte[] allTokens = detectorService.getAllTokens();
 
         sendResponse(exchange, allTokens);
     }
 
-    private static void postHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
+    private void postHttpMethod(HttpExchange exchange, DetectorServiceImpl detectorService) throws IOException {
         String input = readInput(exchange);
         byte[] nameDetected = detectorService.detectName(input).getBytes();
 
         sendResponse(exchange, nameDetected);
     }
 
-    private static void sendResponse(HttpExchange exchange, byte[] out) throws IOException {
+    private void sendResponse(HttpExchange exchange, byte[] out) throws IOException {
         exchange.sendResponseHeaders(200, out.length);
         OutputStream output = exchange.getResponseBody();
         output.write(out);
         output.flush();
     }
 
-    private static byte[] concatByteArray(byte[] byte1, byte[] byte2) {
-        return ByteBuffer.allocate(byte1.length + byte2.length)
-                .put(byte1)
-                .put(byte2)
-                .array();
-    }
-
-    private static String readInput(HttpExchange exchange) {
+    private String readInput(HttpExchange exchange) {
         InputStream requestBody = exchange.getRequestBody();
         Scanner scanner = new Scanner(requestBody).useDelimiter("\\A");
         return scanner.hasNext() ? scanner.next() : "";
