@@ -6,7 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,8 +36,8 @@ class NameApiTest {
     }
 
     private static String tokenList() {
-        return "Jan\n" + "Zbigniew\n" + "Karol\n" + "Maria\n" +
-                "Anna\n" + "Gertruda\n";
+        return "Jan\r\n" + "Zbigniew\r\n" + "Karol\r\n" +
+                "Maria\r\n" + "Anna\r\n" + "Gertruda\r\n";
     }
 
     @Test
