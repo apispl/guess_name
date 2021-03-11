@@ -1,10 +1,11 @@
 package pl.pszczolkowski.guess_name.dataloader;
 
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.stream.Collectors;
 
 @Component
 public class FileFacadeImpl implements FileFacade {
@@ -25,10 +26,7 @@ public class FileFacadeImpl implements FileFacade {
     }
 
     @Override
-    public byte[] fetchData(Path path) throws IOException {
-        return fileFetcher.fetch(path)
-                .filter(fileLineValidator::validate)
-                .map(str -> str.concat("\n"))
-                .collect(Collectors.joining()).getBytes();
+    public InputStream fetchData(Path path) throws IOException {
+        return fileFetcher.transferData(path);
     }
 }

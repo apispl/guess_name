@@ -3,12 +3,14 @@ package pl.pszczolkowski.guess_name.buissines_logic;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import pl.pszczolkowski.guess_name.dataloader.FileFacade;
 import pl.pszczolkowski.guess_name.detect_algorithms.NameDetector;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
 import java.nio.file.Path;
 
 @Service
@@ -27,22 +29,16 @@ public class DetectorServiceImpl implements DetectorService {
     }
 
     @Override
-    public byte[] getAllTokens() throws IOException {
-        byte[] maleTokens = fileFacade.fetchData(MALE_PATH);
-        byte[] femaleTokens = fileFacade.fetchData(FEMALE_PATH);
+    public InputStreamResource getAllTokens() throws IOException {
+        InputStream maleInputStream = fileFacade.fetchData(MALE_PATH);
+        InputStream femaleInputStream = fileFacade.fetchData(FEMALE_PATH);
+        SequenceInputStream mergedStreams = new SequenceInputStream(maleInputStream, femaleInputStream);
 
-        return concatByteArray(maleTokens, femaleTokens);
+        return new InputStreamResource(mergedStreams);
     }
 
     @Override
     public String detectName(String name) throws IOException {
         return nameDetector.detect(name, fileFacade, MALE_PATH, FEMALE_PATH);
-    }
-
-    private static byte[] concatByteArray(byte[] byte1, byte[] byte2) {
-        return ByteBuffer.allocate(byte1.length + byte2.length)
-                .put(byte1)
-                .put(byte2)
-                .array();
     }
 }
