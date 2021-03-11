@@ -25,7 +25,7 @@ public class NameApi {
     }
 
     @GetMapping
-    public ResponseEntity<StreamingResponseBody> getTokens() {
+    public ResponseEntity<StreamingResponseBody> getAllTokens() {
         StreamingResponseBody responseBody = outputStream -> outputStream.write(detectorService.getAllTokens());
 
         return ResponseEntity.ok()
@@ -34,7 +34,7 @@ public class NameApi {
     }
 
     @PostMapping
-    public ResponseEntity<String> postName(@RequestBody String name) throws IOException {
+    public ResponseEntity<String> detectName(@RequestBody String name) throws IOException {
         String result = detectorService.detectName(name);
 
         return ResponseEntity.ok()

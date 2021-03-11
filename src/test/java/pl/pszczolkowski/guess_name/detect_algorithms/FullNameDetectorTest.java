@@ -75,7 +75,7 @@ class FullNameDetectorTest {
         }
 
         //then
-        assertEquals("Add name", errorMessage);
+        assertTrue(errorMessage.contains("Add name"));
     }
 
     @Test
@@ -92,6 +92,6 @@ class FullNameDetectorTest {
         }
 
         //then
-        assertEquals("Add name", errorMessage);
+        assertTrue(errorMessage.contains("Add name"));
     }
 }
