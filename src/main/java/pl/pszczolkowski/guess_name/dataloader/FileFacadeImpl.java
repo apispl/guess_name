@@ -1,11 +1,9 @@
 package pl.pszczolkowski.guess_name.dataloader;
 
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.io.SequenceInputStream;
 
 @Component
 public class FileFacadeImpl implements FileFacade {
@@ -19,14 +17,24 @@ public class FileFacadeImpl implements FileFacade {
     }
 
     @Override
-    public boolean hasName(Path path, String name) throws IOException {
-        return fileFetcher.fetch(path)
+    public boolean hasMaleName(String name) {
+        return fileFetcher.fetch("male_names")
                 .filter(fileLineValidator::validate)
                 .anyMatch(line -> line.equals(name));
     }
 
     @Override
-    public InputStream fetchData(Path path) throws IOException {
-        return fileFetcher.transferData(path);
+    public boolean hasFemaleName(String name) {
+        return fileFetcher.fetch("female_names")
+                .filter(fileLineValidator::validate)
+                .anyMatch(line -> line.equals(name));
+    }
+
+    @Override
+    public SequenceInputStream fetchData() {
+        InputStream maleInputStream = fileFetcher.transferData("male_names");
+        InputStream femaleInputStream = fileFetcher.transferData("female_names");
+
+        return new SequenceInputStream(maleInputStream, femaleInputStream);
     }
 }
