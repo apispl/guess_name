@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import pl.pszczolkowski.guess_name.dataloader.FileFacade;
 import pl.pszczolkowski.guess_name.dataloader.FileFacadeConfiguration;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -3,8 +3,6 @@ package pl.pszczolkowski.guess_name.detect_algorithms;
 import org.springframework.stereotype.Component;
 import pl.pszczolkowski.guess_name.dataloader.FileFacade;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.NoSuchElementException;
 
 @Component("fullName")
