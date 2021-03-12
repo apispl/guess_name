@@ -13,9 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FirstNameDetectorTest {
 
-    private static final Path MALE_TEST_PATH = Path.of("src/test/resources/male_names_test");
-    private static final Path FEMALE_TEST_PATH = Path.of("src/test/resources/female_names_test");
-
     private NameDetector nameDetector;
     private FileFacade fileFacade;
 
@@ -26,50 +23,50 @@ class FirstNameDetectorTest {
     }
 
     @Test
-    void shouldDetectFirstNameDetector_male() throws IOException {
+    void shouldDetectFirstNameDetector_male() {
         //given
         String inputName = "Karol Pompejusz";
 
         //when
-        String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
+        String result = nameDetector.detect(inputName, fileFacade);
 
         //then
         assertEquals("MALE", result);
     }
 
     @Test
-    void shouldDetectFirstNameDetector_female() throws IOException {
+    void shouldDetectFirstNameDetector_female() {
         //given
         String inputName = "Anna Jadwiga";
 
         //when
-        String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
+        String result = nameDetector.detect(inputName, fileFacade);
 
         //then
         assertEquals("FEMALE", result);
     }
 
     @Test
-    void shouldDetectFirstNameDetector_inconclusive() throws IOException {
+    void shouldDetectFirstNameDetector_inconclusive() {
         //given
         String inputName = "Jadwiga";
 
         //when
-        String result = nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
+        String result = nameDetector.detect(inputName, fileFacade);
 
         //then
         assertEquals("INCONCLUSIVE", result);
     }
 
     @Test
-    void shouldNotDetectFirstNameDetector_emptyInput() throws IOException {
+    void shouldNotDetectFirstNameDetector_emptyInput() {
         //given
         String inputName = "";
 
         //when
         String errorMessage = "";
         try {
-            nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
+            nameDetector.detect(inputName, fileFacade);
         } catch (NoSuchElementException e) {
             errorMessage = e.getMessage();
         }
@@ -79,14 +76,14 @@ class FirstNameDetectorTest {
     }
 
     @Test
-    void shouldNotDetectFirstNameDetector_spaceInput() throws IOException {
+    void shouldNotDetectFirstNameDetector_spaceInput() {
         //given
         String inputName = " ";
 
         //when
         String errorMessage = "";
         try {
-            nameDetector.detect(inputName, fileFacade, MALE_TEST_PATH, FEMALE_TEST_PATH);
+            nameDetector.detect(inputName, fileFacade);
         } catch (NoSuchElementException e) {
             errorMessage = e.getMessage();
         }

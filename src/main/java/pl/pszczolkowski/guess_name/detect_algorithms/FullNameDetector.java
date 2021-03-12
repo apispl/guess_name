@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 public class FullNameDetector implements NameDetector {
 
     @Override
-    public String detect(String nameSurname, FileFacade fileFacade, Path malePath, Path femalePath) throws IOException {
+    public String detect(String nameSurname, FileFacade fileFacade) {
         String[] splited = nameSurname.split(" ");
         int maleCounter = 0;
         int femaleCounter = 0;
@@ -20,9 +20,9 @@ public class FullNameDetector implements NameDetector {
             throw new NoSuchElementException("Add name");
 
         for (String separatedName : splited) {
-            if (fileFacade.hasName(malePath, separatedName))
+            if (fileFacade.hasMaleName(separatedName))
                 maleCounter++;
-            if (fileFacade.hasName(femalePath, separatedName))
+            if (fileFacade.hasFemaleName(separatedName))
                 femaleCounter++;
         }
 

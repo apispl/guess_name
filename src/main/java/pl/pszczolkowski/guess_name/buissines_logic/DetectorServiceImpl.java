@@ -8,16 +8,10 @@ import org.springframework.stereotype.Service;
 import pl.pszczolkowski.guess_name.dataloader.FileFacade;
 import pl.pszczolkowski.guess_name.detect_algorithms.NameDetector;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.SequenceInputStream;
-import java.nio.file.Path;
 
 @Service
 public class DetectorServiceImpl implements DetectorService {
-
-    private static final Path MALE_PATH = Path.of("src/main/resources/male_names");
-    private static final Path FEMALE_PATH = Path.of("src/main/resources/female_names");
 
     private final FileFacade fileFacade;
     private NameDetector nameDetector;
@@ -29,16 +23,14 @@ public class DetectorServiceImpl implements DetectorService {
     }
 
     @Override
-    public InputStreamResource getAllTokens() throws IOException {
-        InputStream maleInputStream = fileFacade.fetchData(MALE_PATH);
-        InputStream femaleInputStream = fileFacade.fetchData(FEMALE_PATH);
-        SequenceInputStream mergedStreams = new SequenceInputStream(maleInputStream, femaleInputStream);
+    public InputStreamResource getAllTokens() {
+        SequenceInputStream mergedStreams = fileFacade.fetchData();
 
         return new InputStreamResource(mergedStreams);
     }
 
     @Override
-    public String detectName(String name) throws IOException {
-        return nameDetector.detect(name, fileFacade, MALE_PATH, FEMALE_PATH);
+    public String detectName(String name) {
+        return nameDetector.detect(name, fileFacade);
     }
 }
