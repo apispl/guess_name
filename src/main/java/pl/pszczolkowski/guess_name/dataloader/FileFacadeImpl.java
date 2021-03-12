@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 
 @Component
-public class FileFacadeImpl implements FileFacade {
+class FileFacadeImpl implements FileFacade {
 
     private final FileLineValidator fileLineValidator;
     private final FileFetcher fileFetcher;

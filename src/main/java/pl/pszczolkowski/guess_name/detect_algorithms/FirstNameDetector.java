@@ -6,7 +6,7 @@ import pl.pszczolkowski.guess_name.dataloader.FileFacade;
 import java.util.NoSuchElementException;
 
 @Component("firstName")
-public class FirstNameDetector implements NameDetector {
+class FirstNameDetector implements NameDetector {
 
     @Override
     public String detect(String nameSurname, FileFacade fileFacade) {

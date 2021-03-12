@@ -11,7 +11,7 @@ import pl.pszczolkowski.guess_name.detect_algorithms.NameDetector;
 import java.io.SequenceInputStream;
 
 @Service
-public class DetectorServiceImpl implements DetectorService {
+class DetectorServiceImpl implements DetectorService {
 
     private final FileFacade fileFacade;
     private NameDetector nameDetector;

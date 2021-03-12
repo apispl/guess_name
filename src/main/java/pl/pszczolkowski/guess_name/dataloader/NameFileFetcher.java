@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
 @Component
-public class NameFileFetcher  implements  FileFetcher{
+class NameFileFetcher  implements  FileFetcher{
     @Override
     public Stream<String> fetch(String fileName) {
         InputStream inputStream = getClass().getResourceAsStream("/" + fileName);
